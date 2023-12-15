@@ -1,18 +1,19 @@
 #include <iostream>
-#include <sstream>
 #include <string>
+#include <memory>
+
+#include "content_formatter.hpp"
 
 double determinant2x2(double** matrix);
 
 double determinant(double** matrix, int size);
-
-std::string format_matrix(double** matrix, int size);
 
 void cleanup(double** matrix, int size);
 
 double** generate_sub_matrix(double** matrix, int size, int col_to_skip);
 
 int main() {
+    std::shared_ptr<text::ContentFormatter> content_formatter = std::make_shared<text::ContentFormatterImpl>();
     int size = 4;
 
     double** matrix = new double*[size];
@@ -36,7 +37,7 @@ int main() {
     matrix[3][2] = 2;
     matrix[3][3] = 2;
 
-    std::string matrix_str = format_matrix(matrix, size);
+    std::string matrix_str = content_formatter->format_matrix(matrix, size);
     std::cout << "matrix: \n" << matrix_str << std::endl;
 
     double det = determinant(matrix, size);
@@ -66,20 +67,6 @@ double determinant(double** matrix, int size) {
     } else {
         return determinant2x2(matrix);
     }
-}
-
-std::string format_matrix(double** matrix, int size) {
-    std::stringstream sstm{};
-
-    for (int row = 0; row < size; row++) {
-        for (int col = 0; col < size; col++) {
-            sstm << matrix[row][col] << "\t";
-        }
-
-        sstm << "\n";
-    }
-
-    return sstm.str();
 }
 
 void cleanup(double** matrix, int size) {

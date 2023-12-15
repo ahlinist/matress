@@ -2,5 +2,4 @@
 
 ## compile and run
 
-g++ cpp/main.cpp -o main && ./main  
-
+g++ cpp/* -o main && ./main  
