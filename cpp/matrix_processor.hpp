@@ -9,9 +9,9 @@ namespace matrix {
     public:
         virtual ~MatrixProcessor() {}
         explicit MatrixProcessor(const std::shared_ptr<memory::MemoryManager> memory_manager);
-        virtual double determinant2x2(double** matrix) = 0;
-        virtual double determinant(double** matrix, const int &size) = 0;
-        virtual double** generate_sub_matrix(double** matrix, const int &size, const int &col_to_skip) = 0;
+        virtual long double determinant2x2(long double** matrix) = 0;
+        virtual long double determinant(long double** matrix, const int &size) = 0;
+        virtual long double** generate_sub_matrix(long double** matrix, const int &size, const int &col_to_skip) = 0;
     protected:
         std::shared_ptr<memory::MemoryManager> memory_manager;
     };
@@ -19,8 +19,8 @@ namespace matrix {
     class MatrixProcessorImpl : public MatrixProcessor {
     public:
         using MatrixProcessor::MatrixProcessor;
-        virtual double determinant2x2(double** matrix) override;
-        virtual double determinant(double** matrix, const int &size) override;
-        virtual double** generate_sub_matrix(double** matrix, const int &size, const int &col_to_skip) override;
+        virtual long double determinant2x2(long double** matrix) override;
+        virtual long double determinant(long double** matrix, const int &size) override;
+        virtual long double** generate_sub_matrix(long double** matrix, const int &size, const int &col_to_skip) override;
     };
 }

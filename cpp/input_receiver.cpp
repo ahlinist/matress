@@ -9,11 +9,11 @@ int input::InputReceiverImpl::read_matrix_size() {
     return matrix_size;
 }
 
-double** input::InputReceiverImpl::read_matrix(const int &size) {
-    double** matrix = new double*[size];
+long double** input::InputReceiverImpl::read_matrix(const int &size) {
+    long double** matrix = new long double*[size];
 
     for (int row = 0; row < size; row++) {
-        matrix[row] = new double[size];
+        matrix[row] = new long double[size];
         std::cout << "Enter elements of row " << row + 1 << ": " << std::endl;
 
         for (int col = 0; col < size; col++) {

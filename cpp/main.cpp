@@ -15,13 +15,13 @@ int main() {
     std::shared_ptr<input::InputReceiver> input_receiver = std::make_shared<input::InputReceiverImpl>();
 
     int size = input_receiver->read_matrix_size();
-    double** matrix = input_receiver->read_matrix(size);
+    long double** matrix = input_receiver->read_matrix(size);
 
     std::string matrix_str = content_formatter->format_matrix(matrix, size);
     std::cout << "matrix: \n" << matrix_str << std::endl;
 
     auto start = std::chrono::high_resolution_clock::now();
-    double det = matrix_processor->determinant(matrix, size);
+    long double det = matrix_processor->determinant(matrix, size);
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
     std::cout << "Time taken: " << duration.count() << " microseconds" << std::endl;

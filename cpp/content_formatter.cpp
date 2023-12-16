@@ -3,7 +3,7 @@
 #include <string>
 #include <sstream>
 
-std::string text::ContentFormatterImpl::format_matrix(double** matrix, const int &size) {
+std::string text::ContentFormatterImpl::format_matrix(long double** matrix, const int &size) {
     std::stringstream sstm{};
 
     for (int row = 0; row < size; row++) {
