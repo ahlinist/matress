@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <memory>
+#include <chrono>
 
 #include "content_formatter.hpp"
 #include "memory_manager.hpp"
@@ -19,7 +20,12 @@ int main() {
     std::string matrix_str = content_formatter->format_matrix(matrix, size);
     std::cout << "matrix: \n" << matrix_str << std::endl;
 
+    auto start = std::chrono::high_resolution_clock::now();
     double det = matrix_processor->determinant(matrix, size);
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+    std::cout << "Time taken: " << duration.count() << " microseconds" << std::endl;
+
     std::cout << "det: " << det << std::endl;
 
     memory_manager->cleanup_matrix(matrix, size);
