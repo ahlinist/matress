@@ -5,8 +5,10 @@
 #include <vector>
 #include <sstream>
 
+#include "matrix.hpp"
+
 int first_line_length(std::ifstream &inputFile);
-void validate_matrix(std::ifstream &inputFile, int &size);
+void validate_matrix(std::ifstream &inputFile, const int &size);
 std::ifstream create_file_stream(std::string &file_name);
 
 int input::InputReceiverImpl::read_matrix_size_from_terminal() {
@@ -16,7 +18,7 @@ int input::InputReceiverImpl::read_matrix_size_from_terminal() {
     return matrix_size;
 }
 
-long double** input::InputReceiverImpl::read_matrix_from_terminal(const int &size) {
+matrix::Matrix input::InputReceiverImpl::read_matrix_from_terminal(const int &size) {
     long double** matrix = new long double*[size];
 
     for (int row = 0; row < size; row++) {
@@ -28,17 +30,36 @@ long double** input::InputReceiverImpl::read_matrix_from_terminal(const int &siz
         }
     }
 
-    return matrix;
+    matrix::Matrix result{ size, matrix};
+    return result;
 }
 
-int input::InputReceiverImpl::read_matrix_size_from_file(std::string file_name) {
+matrix::Matrix input::InputReceiverImpl::read_matrix_from_file(std::string file_name) {
     std::ifstream inputFile = create_file_stream(file_name);
+    const int size = first_line_length(inputFile);
+    validate_matrix(inputFile, size);
+    inputFile.seekg(0, std::ios::beg);
 
-    int size_to_validate = first_line_length(inputFile);
-    validate_matrix(inputFile, size_to_validate);
+    std::string line;
+    long double** matrix = new long double*[size];
+
+    for (int row = 0; row < size; row++) {
+        matrix[row] = new long double[size];
+        std::getline(inputFile, line);
+        std::istringstream iss(line);
+        std::string token;
+
+        for (int col = 0; col < size; col++) {  // Change ',' to your desired delimiter
+            std::getline(iss, token, ',');
+            matrix[row][col] = std::stold(token);
+        }
+    }
+
 
     inputFile.close();
-    return size_to_validate;
+
+    matrix::Matrix result{ size, matrix };
+    return result;
 }
 
 std::ifstream create_file_stream(std::string &file_name) {
@@ -65,7 +86,7 @@ int first_line_length(std::ifstream &inputFile) {
     return tokens.size();
 }
 
-void validate_matrix(std::ifstream &inputFile, int &size) {
+void validate_matrix(std::ifstream &inputFile, const int &size) {
     std::string line;
     int line_number = 1;
 
@@ -97,25 +118,4 @@ void validate_matrix(std::ifstream &inputFile, int &size) {
 
         line_number++;
     }
-}
-
-long double** input::InputReceiverImpl::read_matrix_from_file(std::string file_name, const int &size) {
-    std::ifstream inputFile = create_file_stream(file_name);
-    std::string line;
-    long double** matrix = new long double*[size];
-
-    for (int row = 0; row < size; row++) {
-        matrix[row] = new long double[size];
-        std::getline(inputFile, line);
-        std::istringstream iss(line);
-        std::string token;
-
-        for (int col = 0; col < size; col++) {  // Change ',' to your desired delimiter
-            std::getline(iss, token, ',');
-            matrix[row][col] = std::stold(token);
-        }
-    }
-
-    inputFile.close();
-    return matrix;
 }

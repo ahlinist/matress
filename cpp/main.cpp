@@ -14,27 +14,25 @@ int main(int argc, char *argv[]) {
     std::shared_ptr<matrix::MatrixProcessor> matrix_processor = std::make_shared<matrix::MatrixProcessorImpl>(memory_manager);
     std::shared_ptr<input::InputReceiver> input_receiver = std::make_shared<input::InputReceiverImpl>();
 
-    int size{};
-    long double** matrix{};
+    matrix::Matrix matrix;
 
     if (argc == 1) {
-        size = input_receiver->read_matrix_size_from_terminal();
+        int size = input_receiver->read_matrix_size_from_terminal();
         matrix = input_receiver->read_matrix_from_terminal(size);
     } else {
-        size = input_receiver->read_matrix_size_from_file(argv[1]);
-        matrix = input_receiver-> read_matrix_from_file(argv[1], size);
+        matrix = input_receiver-> read_matrix_from_file(argv[1]);
     }
 
-    std::string matrix_str = content_formatter->format_matrix(matrix, size);
+    std::string matrix_str = content_formatter->format_matrix(matrix.body, matrix.size);
     std::cout << "matrix: \n" << matrix_str << std::endl;
 
     auto start = std::chrono::high_resolution_clock::now();
-    long double det = matrix_processor->determinant(matrix, size);
+    long double det = matrix_processor->determinant(matrix.body, matrix.size);
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
     std::cout << "Time taken: " << duration.count() << " microseconds" << std::endl;
 
     std::cout << "det: " << det << std::endl;
 
-    memory_manager->cleanup_matrix(matrix, size);
+    memory_manager->cleanup_matrix(matrix. body, matrix.size);
 }
