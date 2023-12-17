@@ -13,6 +13,13 @@ int first_line_length(std::ifstream &inputFile);
 void validate_matrix(std::ifstream &inputFile, const int &size);
 std::ifstream create_file_stream(std::string &file_name);
 
+matrix::Matrix input::InputReceiverImpl::read_matrix_from_terminal() {
+    int size = read_matrix_size_from_terminal();
+    long double** matrix = read_matrix_body_from_terminal(size);
+    matrix::Matrix result{ size, matrix};
+    return result;
+}
+
 int input::InputReceiverImpl::read_matrix_size_from_terminal() {
     std::cout << "Enter matrix size: ";
     int matrix_size;
@@ -20,7 +27,7 @@ int input::InputReceiverImpl::read_matrix_size_from_terminal() {
     return matrix_size;
 }
 
-matrix::Matrix input::InputReceiverImpl::read_matrix_from_terminal(const int &size) {
+long double** input::InputReceiverImpl::read_matrix_body_from_terminal(const int &size) {
     long double** matrix = new long double*[size];
 
     for (int row = 0; row < size; row++) {
@@ -32,8 +39,7 @@ matrix::Matrix input::InputReceiverImpl::read_matrix_from_terminal(const int &si
         }
     }
 
-    matrix::Matrix result{ size, matrix};
-    return result;
+    return matrix;
 }
 
 matrix::Matrix input::InputReceiverImpl::read_matrix_from_file(std::string file_name) {

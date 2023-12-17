@@ -17,8 +17,7 @@ int main(int argc, char *argv[]) {
     matrix::Matrix matrix;
 
     if (argc == 1) {
-        int size = input_receiver->read_matrix_size_from_terminal();
-        matrix = input_receiver->read_matrix_from_terminal(size);
+        matrix = input_receiver->read_matrix_from_terminal();
     } else {
         matrix = input_receiver-> read_matrix_from_file(argv[1]);
     }
