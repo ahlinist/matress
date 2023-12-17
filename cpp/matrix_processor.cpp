@@ -3,12 +3,17 @@
 #include <memory>
 
 #include "memory_manager.hpp"
+#include "matrix.hpp"
 
 matrix::MatrixProcessor::MatrixProcessor(const std::shared_ptr<memory::MemoryManager> memory_manager) 
     : memory_manager{ memory_manager} {} 
 
 long double matrix::MatrixProcessorImpl::determinant2x2(long double** matrix) {
     return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+}
+
+long double matrix::MatrixProcessorImpl::determinant(const matrix::Matrix &matrix) {
+    return determinant(matrix.body, matrix.size);
 }
 
 long double matrix::MatrixProcessorImpl::determinant(long double** matrix, const int &size) {

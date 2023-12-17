@@ -7,6 +7,8 @@
 
 #include "matrix.hpp"
 
+const char DELIMITER = ',';
+
 int first_line_length(std::ifstream &inputFile);
 void validate_matrix(std::ifstream &inputFile, const int &size);
 std::ifstream create_file_stream(std::string &file_name);
@@ -49,8 +51,8 @@ matrix::Matrix input::InputReceiverImpl::read_matrix_from_file(std::string file_
         std::istringstream iss(line);
         std::string token;
 
-        for (int col = 0; col < size; col++) {  // Change ',' to your desired delimiter
-            std::getline(iss, token, ',');
+        for (int col = 0; col < size; col++) {
+            std::getline(iss, token, DELIMITER);
             matrix[row][col] = std::stold(token);
         }
     }
@@ -79,7 +81,7 @@ int first_line_length(std::ifstream &inputFile) {
     std::string token;
     std::vector<std::string> tokens;
 
-    while (std::getline(iss, token, ',')) {  // Change ',' to your desired delimiter
+    while (std::getline(iss, token, DELIMITER)) {
         tokens.push_back(token);
     }
 
@@ -95,7 +97,7 @@ void validate_matrix(std::ifstream &inputFile, const int &size) {
         std::string token;
         std::vector<std::string> tokens;
 
-        while (std::getline(iss, token, ',')) {  // Change ',' to your desired delimiter
+        while (std::getline(iss, token, DELIMITER)) {
             tokens.push_back(token);
         }
 

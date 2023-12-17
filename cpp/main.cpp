@@ -23,16 +23,16 @@ int main(int argc, char *argv[]) {
         matrix = input_receiver-> read_matrix_from_file(argv[1]);
     }
 
-    std::string matrix_str = content_formatter->format_matrix(matrix.body, matrix.size);
+    std::string matrix_str = content_formatter->format_matrix(matrix);
     std::cout << "matrix: \n" << matrix_str << std::endl;
 
     auto start = std::chrono::high_resolution_clock::now();
-    long double det = matrix_processor->determinant(matrix.body, matrix.size);
+    long double det = matrix_processor->determinant(matrix);
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
     std::cout << "Time taken: " << duration.count() << " microseconds" << std::endl;
 
     std::cout << "det: " << det << std::endl;
 
-    memory_manager->cleanup_matrix(matrix. body, matrix.size);
+    memory_manager->cleanup_matrix(matrix);
 }
