@@ -90,7 +90,7 @@ void validate_matrix(std::ifstream &inputFile, int &size) {
         }
 
         if (current_row_length != size) {
-            std::string message = "Row number " + std::to_string(line_number) + " contains " + 
+            std::string message = "Row number " + std::to_string(line_number + 1) + " contains " + 
                 std::to_string(current_row_length) + " elements instead of " + std::to_string(size) + " as in the 1-st one.";
             throw std::invalid_argument(message);
         }
