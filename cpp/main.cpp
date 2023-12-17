@@ -8,14 +8,22 @@
 #include "matrix_processor.hpp"
 #include "input_receiver.hpp"
 
-int main() {
+int main(int argc, char *argv[]) {
     std::shared_ptr<text::ContentFormatter> content_formatter = std::make_shared<text::ContentFormatterImpl>();
     std::shared_ptr<memory::MemoryManager> memory_manager = std::make_shared<memory::MemoryManagerImpl>();
     std::shared_ptr<matrix::MatrixProcessor> matrix_processor = std::make_shared<matrix::MatrixProcessorImpl>(memory_manager);
     std::shared_ptr<input::InputReceiver> input_receiver = std::make_shared<input::InputReceiverImpl>();
 
-    int size = input_receiver->read_matrix_size();
-    long double** matrix = input_receiver->read_matrix(size);
+    int size{};
+    long double** matrix{};
+
+    if (argc == 1) {
+        size = input_receiver->read_matrix_size_from_terminal();
+        matrix = input_receiver->read_matrix_from_terminal(size);
+    } else {
+        size = input_receiver->read_matrix_size_from_file(argv[1]);
+        matrix = input_receiver-> read_matrix_from_file(argv[1], size);
+    }
 
     std::string matrix_str = content_formatter->format_matrix(matrix, size);
     std::cout << "matrix: \n" << matrix_str << std::endl;

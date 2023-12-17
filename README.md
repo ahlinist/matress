@@ -2,4 +2,4 @@
 
 ## compile and run
 
-g++ cpp/* -o main && ./main  
+g++ cpp/* -o main && ./main input.txt  
