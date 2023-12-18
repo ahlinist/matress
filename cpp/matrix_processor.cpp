@@ -6,7 +6,7 @@
 #include "matrix.hpp"
 
 long double** allocate_sub_matrix(const int& size);
-void generate_sub_matrix(long double** matrix, long double** sub_matrix, const int& size, const int& col_to_skip);
+void populate_sub_matrix(long double** matrix, long double** sub_matrix, const int& size, const int& col_to_skip);
 long double determinant(long double** matrix, const int& size);
 long double determinant2x2(long double** matrix);
 
@@ -29,7 +29,7 @@ long double matrix::MatrixProcessorImpl::determinant(long double** matrix, const
     long double** sub_matrix = allocate_sub_matrix(size);
 
     for (int col_to_skip = 0; col_to_skip < size; col_to_skip++) {
-        generate_sub_matrix(matrix, sub_matrix, size, col_to_skip);
+        populate_sub_matrix(matrix, sub_matrix, size, col_to_skip);
         result += sign * matrix[0][col_to_skip] * determinant(sub_matrix, next_size);
         sign = -sign;
     }
@@ -53,7 +53,7 @@ long double** allocate_sub_matrix(const int& size) {
     return result;
 }
 
-void generate_sub_matrix(long double** matrix, long double** sub_matrix, const int& size, const int& col_to_skip) {
+void populate_sub_matrix(long double** matrix, long double** sub_matrix, const int& size, const int& col_to_skip) {
     for (int row = 0; row < size - 1; row++) {
         for (int col = 0, sub_col = 0; col < size; col++) {
             if (col == col_to_skip) {
