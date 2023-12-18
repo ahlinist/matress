@@ -46,7 +46,8 @@ matrix::Matrix input::InputReceiverImpl::read_matrix_from_file(std::string file_
     std::ifstream inputFile = create_file_stream(file_name);
     const int size = first_line_length(inputFile);
     validate_matrix(inputFile, size);
-    inputFile.seekg(0, std::ios::beg);
+    inputFile.close();
+    inputFile.open(file_name);
 
     std::string line;
     long double** matrix = new long double*[size];
