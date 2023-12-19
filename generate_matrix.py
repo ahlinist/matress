@@ -11,6 +11,6 @@ def write_matrix_to_file(matrix, filename):
             file.write(row_str + '\n')
 
 if __name__ == "__main__":
-    X = 11  # Change this to your desired matrix size
+    X = 10  # Change this to your desired matrix size
     matrix = generate_matrix(X)
     write_matrix_to_file(matrix, 'input.txt')

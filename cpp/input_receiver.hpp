@@ -13,7 +13,7 @@ namespace input {
         virtual matrix::Matrix read_matrix_from_terminal() = 0;
     protected:
         virtual int read_matrix_size_from_terminal() = 0;
-        virtual long double** read_matrix_body_from_terminal(const int &size) = 0;
+        virtual std::shared_ptr<long double*[]> read_matrix_body_from_terminal(const int &size) = 0;
     };
 
     class InputReceiverImpl : public InputReceiver {
@@ -22,6 +22,6 @@ namespace input {
         virtual matrix::Matrix read_matrix_from_terminal() override;
     protected:
         virtual int read_matrix_size_from_terminal() override;
-        virtual long double** read_matrix_body_from_terminal(const int &size) override;
+        virtual std::shared_ptr<long double*[]> read_matrix_body_from_terminal(const int &size) override;
     };
 }
