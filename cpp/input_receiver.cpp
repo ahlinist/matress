@@ -16,35 +16,6 @@ std::ifstream create_file_stream(std::string &file_name);
 std::shared_ptr<long double*[]> allocate_matrix(const int& size);
 void populate_matrix(std::ifstream &inputFile, std::shared_ptr<long double*[]> matrix, const int& size);
 
-matrix::Matrix input::InputReceiverImpl::read_matrix_from_terminal() {
-    int size = read_matrix_size_from_terminal();
-    std::shared_ptr<long double*[]> matrix = read_matrix_body_from_terminal(size);
-    matrix::Matrix result{ size, matrix };
-    return result;
-}
-
-int input::InputReceiverImpl::read_matrix_size_from_terminal() {
-    std::cout << "Enter matrix size: ";
-    int matrix_size;
-    std::cin >> matrix_size;
-    return matrix_size;
-}
-
-std::shared_ptr<long double*[]> input::InputReceiverImpl::read_matrix_body_from_terminal(const int &size) {
-    std::shared_ptr<long double*[]> matrix(new long double*[size]);
-
-    for (int row = 0; row < size; row++) {
-        matrix[row] = new long double[size];
-        std::cout << "Enter elements of row " << row + 1 << ": " << std::endl;
-
-        for (int col = 0; col < size; col++) {
-            std::cin >> matrix[row][col];
-        }
-    }
-
-    return matrix;
-}
-
 matrix::Matrix input::InputReceiverImpl::read_matrix_from_file(std::string file_name) {
     std::ifstream inputFile = create_file_stream(file_name);
     const int size = read_matrix_size_from_file(inputFile);
