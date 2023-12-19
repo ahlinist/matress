@@ -18,16 +18,12 @@ int main(int argc, char *argv[]) {
     std::shared_ptr<matrix::MatrixProcessor> matrix_processor = std::make_shared<matrix::MatrixProcessorImpl>(memory_manager);
     std::shared_ptr<input::InputReceiver> input_receiver = std::make_shared<input::InputReceiverImpl>();
 
-    matrix::Matrix matrix;
-
-    if (argc == 1) {
-        matrix = input_receiver->read_matrix_from_terminal();
-    } else {
-        matrix = input_receiver-> read_matrix_from_file(argv[1]);
-    }
+    matrix::Matrix matrix = input_receiver-> read_matrix_from_file(argv[1]);
 
     auto start = std::chrono::high_resolution_clock::now();
+
     long double det = matrix_processor->determinant(matrix);
+    
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
     std::cout << "Time taken: " << duration.count() << " microseconds" << std::endl;
