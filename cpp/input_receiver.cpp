@@ -9,13 +9,13 @@
 
 const char DELIMITER = ',';
 
-int first_line_length(std::ifstream &inputFile);
+int read_matrix_size_from_file(std::ifstream &inputFile);
 void validate_matrix(std::ifstream &inputFile, const int &size);
 std::ifstream create_file_stream(std::string &file_name);
 
 matrix::Matrix input::InputReceiverImpl::read_matrix_from_file(std::string file_name) {
     std::ifstream inputFile = create_file_stream(file_name);
-    const int size = first_line_length(inputFile);
+    const int size = read_matrix_size_from_file(inputFile);
     validate_matrix(inputFile, size);
     inputFile.close();
     inputFile.open(file_name);
@@ -52,7 +52,7 @@ std::ifstream create_file_stream(std::string &file_name) {
     return inputFile;
 }
 
-int first_line_length(std::ifstream &inputFile) {
+int read_matrix_size_from_file(std::ifstream &inputFile) {
     std::string first_line;
     std::getline(inputFile, first_line);
     std::istringstream iss(first_line);
