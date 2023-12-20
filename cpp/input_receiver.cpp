@@ -4,6 +4,7 @@
 #include <fstream>
 #include <vector>
 #include <sstream>
+#include <memory>
 
 #include "matrix.hpp"
 
@@ -12,6 +13,8 @@ const char DELIMITER = ',';
 int read_matrix_size_from_file(std::ifstream &inputFile);
 void validate_matrix(std::ifstream &inputFile, const int &size);
 std::ifstream create_file_stream(std::string &file_name);
+std::shared_ptr<long double*[]> allocate_matrix(const int& size);
+void populate_matrix(std::ifstream &inputFile, std::shared_ptr<long double*[]> matrix, const int& size);
 
 matrix::Matrix input::InputReceiverImpl::read_matrix_from_file(std::string file_name) {
     std::ifstream inputFile = create_file_stream(file_name);
@@ -20,26 +23,38 @@ matrix::Matrix input::InputReceiverImpl::read_matrix_from_file(std::string file_
     inputFile.close();
     inputFile.open(file_name);
 
-    std::string line;
-    long double** matrix = new long double*[size];
-
-    for (int row = 0; row < size; row++) {
-        matrix[row] = new long double[size];
-        std::getline(inputFile, line);
-        std::istringstream iss(line);
-        std::string token;
-
-        for (int col = 0; col < size; col++) {
-            std::getline(iss, token, DELIMITER);
-            matrix[row][col] = std::stold(token);
-        }
-    }
-
+    std::shared_ptr<long double*[]> matrix(allocate_matrix(size));
+    populate_matrix(inputFile, matrix, size);
 
     inputFile.close();
 
     matrix::Matrix result{ size, matrix };
     return result;
+}
+
+std::shared_ptr<long double*[]> allocate_matrix(const int& size) {
+    std::shared_ptr<long double*[]> result(new long double*[size]);
+
+    for (int i = 0; i < size; i++) {
+        result[i] = new long double[size];
+    }
+
+    return result;
+}
+
+void populate_matrix(std::ifstream &inputFile, std::shared_ptr<long double*[]> matrix, const int& size) {
+    std::string line;
+
+    for (int row = 0; row < size; row++) {
+        std::getline(inputFile, line);
+        std::istringstream iss(line);
+        std::string token;
+        
+        for (int col = 0, sub_col = 0; col < size; col++) {
+            std::getline(iss, token, DELIMITER);
+            matrix[row][col] = std::stold(token);
+        }
+    }
 }
 
 std::ifstream create_file_stream(std::string &file_name) {

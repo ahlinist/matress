@@ -1,8 +1,10 @@
 #pragma once
 
+#include <memory>
+
 namespace matrix {
     struct Matrix {
         int size;
-        long double** body;
+        std::shared_ptr<long double*[]> body;
     };
 }
