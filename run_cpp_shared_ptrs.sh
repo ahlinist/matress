@@ -1,6 +1,3 @@
-# Print execution time
-echo "Execution time for cpp: $execution_time seconds"
-
 # Start measuring execution time
 start_time=$(date +%s.%N)
 
