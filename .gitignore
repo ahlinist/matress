@@ -4,3 +4,5 @@ main_cpp
 main_cpp_shared_ptrs
 main_fortran
 *.out
+*.o
+*.mod
