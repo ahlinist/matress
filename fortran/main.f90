@@ -16,9 +16,6 @@ program matress
   ! Read the matrix values
   call readMatrix(filename, matrix, size)
 
-  ! Print the matrix
-  call printMatrix(size, matrix)
-
   ! Calculate and print the determinant
   write(*, *) 'Matrix determinant:', calculateDeterminant(size, matrix)
 
@@ -26,19 +23,6 @@ program matress
   deallocate(matrix)
 
 contains
-
-  subroutine printMatrix(size, matrix)
-    integer, intent(in) :: size
-    real, intent(in) :: matrix(:,:)
-    integer :: i, j  ! loop indices
-
-    ! Print the matrix size and values (optional)
-    write(*, *) 'Matrix size:', size
-    write(*, *) 'Matrix values:'
-    do i = 1, size
-      write(*, '(1000(F6.3, 2X))') (matrix(i, j), j = 1, size)
-    end do
-  end subroutine printMatrix
 
   subroutine readMatrix(filename, matrix, size)
     character(len=*), intent(in) :: filename
@@ -116,7 +100,7 @@ contains
 
     ! Perform LU decomposition
     LU = matrix
-    call LU_decomposition(size, LU)
+    call decomposeMatrix(size, LU)
 
     ! Calculate determinant as the product of diagonal elements of U
     do i = 1, size
@@ -126,21 +110,21 @@ contains
     calculateDeterminant = det
   end function calculateDeterminant
 
-  subroutine LU_decomposition(size, A)
+  subroutine decomposeMatrix(size, matrix)
     integer, intent(in) :: size
-    real, intent(inout) :: A(size, size)
+    real, intent(inout) :: matrix(size, size)
     integer :: i, j, k
     real :: factor
 
     do k = 1, size - 1
       do i = k + 1, size
-        factor = A(i, k) / A(k, k)
-        A(i, k) = factor
+        factor = matrix(i, k) / matrix(k, k)
+        matrix(i, k) = factor
         do j = k + 1, size
-          A(i, j) = A(i, j) - factor * A(k, j)
+          matrix(i, j) = matrix(i, j) - factor * matrix(k, j)
         end do
       end do
     end do
-  end subroutine LU_decomposition
+  end subroutine decomposeMatrix
 
 end program matress
