@@ -21,10 +21,10 @@ matrix::Matrix input::InputReceiverImpl::read_matrix_from_file(std::string file_
     inputFile.open(file_name);
 
     std::string line;
-    long double** matrix = new long double*[size];
+    double** matrix = new double*[size];
 
     for (int row = 0; row < size; row++) {
-        matrix[row] = new long double[size];
+        matrix[row] = new double[size];
         std::getline(inputFile, line);
         std::istringstream iss(line);
         std::string token;

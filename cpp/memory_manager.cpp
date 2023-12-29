@@ -9,7 +9,7 @@ void memory::MemoryManagerImpl::cleanup_matrix(const matrix::Matrix &matrix) {
     delete[] matrix.body;
 }
 
-void memory::MemoryManagerImpl::cleanup_matrix(long double** matrix) {
+void memory::MemoryManagerImpl::cleanup_matrix(double** matrix) {
     delete[] matrix[0];
     delete[] matrix;
 }
