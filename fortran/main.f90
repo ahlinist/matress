@@ -10,11 +10,6 @@ program matress
   ! Get the filename from the command-line argument
   call get_command_argument(1, filename)
 
-  call readSize(filename, size)
-
-  ! Allocate the matrix
-  allocate(matrix(size, size))
-
   ! Read the matrix values
   call readMatrix(filename, matrix, size)
 
