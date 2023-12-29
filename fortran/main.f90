@@ -119,8 +119,7 @@ contains
     do k = 1, size - 1
       do i = k + 1, size
         factor = matrix(i, k) / matrix(k, k)
-        matrix(i, k) = factor
-        do j = k + 1, size
+        do j = k, size
           matrix(i, j) = matrix(i, j) - factor * matrix(k, j)
         end do
       end do
