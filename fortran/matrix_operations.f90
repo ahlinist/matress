@@ -10,7 +10,7 @@ module MatrixOperations
     real, intent(in) :: matrix(size, size)
     real, dimension(size, size) :: LU
     integer :: i, j, k
-    real :: det
+    real(8) :: det
 
     ! Initialize determinant
     det = 1.0

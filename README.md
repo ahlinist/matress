@@ -2,7 +2,8 @@
 
 ## compile and run
 
-sh run.sh 
+sh compile.sh  
+sh run.sh  
 
 ## read memory report
 

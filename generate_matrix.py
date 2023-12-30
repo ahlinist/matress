@@ -1,7 +1,7 @@
 import random
 
 def generate_matrix(X):
-    matrix = [[random.uniform(-0.5, 0.5) for _ in range(X)] for _ in range(X)]
+    matrix = [[random.uniform(-0.1, 0.1) for _ in range(X)] for _ in range(X)]
     return matrix
 
 def write_matrix_to_file(matrix, filename):
