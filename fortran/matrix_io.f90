@@ -9,7 +9,7 @@ module MatrixIO
     character(len=*), intent(in) :: filename
     real, allocatable, intent(out) :: matrix(:,:)
     integer, intent(out) :: size
-    character(len=1000) :: line
+    character(len=100000000) :: line
     integer :: i, j
     integer :: ierr
 
