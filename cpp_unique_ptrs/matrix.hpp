@@ -5,6 +5,6 @@
 namespace matrix {
     struct Matrix {
         int size;
-        std::shared_ptr<double*[]> body;
+        std::unique_ptr<std::unique_ptr<double[]>[]> body;
     };
 }

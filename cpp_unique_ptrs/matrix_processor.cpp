@@ -2,9 +2,9 @@
 
 #include <memory>
 
-void transform(std::shared_ptr<double*[]> matrix, const int& size);
+void transform(std::unique_ptr<std::unique_ptr<double[]>[]> &matrix, const int& size);
 
-double matrix::MatrixProcessorImpl::determinant(std::shared_ptr<double*[]> matrix, const int& size) {
+double matrix::MatrixProcessorImpl::determinant(std::unique_ptr<std::unique_ptr<double[]>[]> matrix, const int& size) {
     transform(matrix, size);
 
     double result = 1;
@@ -16,7 +16,7 @@ double matrix::MatrixProcessorImpl::determinant(std::shared_ptr<double*[]> matri
     return result;
 }
 
-void transform(std::shared_ptr<double*[]> matrix, const int& size) {
+void transform(std::unique_ptr<std::unique_ptr<double[]>[]> &matrix, const int& size) {
     for (int i = 0; i < size - 1; i++) {
         for (int j = i + 1; j < size; j++) {
             double factor = matrix[j][i] / matrix[i][i];

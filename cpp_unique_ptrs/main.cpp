@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
 
     matrix::Matrix matrix = input_receiver.read_matrix_from_file(argv[1]);
 
-    double det = matrix_processor.determinant(matrix.body, matrix.size);
+    double det = matrix_processor.determinant(std::move(matrix.body), matrix.size);
     
     std::cout << "det: " << det << std::endl;
 }
