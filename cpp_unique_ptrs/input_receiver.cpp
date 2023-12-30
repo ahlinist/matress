@@ -12,8 +12,7 @@ const char DELIMITER = ',';
 int read_matrix_size_from_file(std::ifstream &inputFile);
 void validate_matrix(std::ifstream &inputFile, const int &size);
 std::ifstream create_file_stream(std::string &file_name);
-std::unique_ptr<std::unique_ptr<double[]>[]> allocate_matrix(const int& size);
-void populate_matrix(std::ifstream &inputFile, std::unique_ptr<std::unique_ptr<double[]>[]> &matrix, const int& size);
+std::unique_ptr<std::unique_ptr<double[]>[]> populate_matrix(std::ifstream &inputFile, const int& size);
 
 matrix::Matrix input::InputReceiverImpl::read_matrix_from_file(std::string file_name) {
     std::ifstream inputFile = create_file_stream(file_name);
@@ -22,8 +21,7 @@ matrix::Matrix input::InputReceiverImpl::read_matrix_from_file(std::string file_
     inputFile.close();
     inputFile.open(file_name);
 
-    std::unique_ptr<std::unique_ptr<double[]>[]> matrix = allocate_matrix(size);
-    populate_matrix(inputFile, matrix, size);
+    std::unique_ptr<std::unique_ptr<double[]>[]> matrix = populate_matrix(inputFile, size);
 
     inputFile.close();
 
@@ -31,29 +29,23 @@ matrix::Matrix input::InputReceiverImpl::read_matrix_from_file(std::string file_
     return result;
 }
 
-std::unique_ptr<std::unique_ptr<double[]>[]> allocate_matrix(const int& size) {
-    std::unique_ptr<std::unique_ptr<double[]>[]> result(new std::unique_ptr<double[]>[size]);
-
-    for (int i = 0; i < size; i++) {
-        result[i] = std::make_unique<double[]>(size);
-    }
-
-    return result;
-}
-
-void populate_matrix(std::ifstream &inputFile, std::unique_ptr<std::unique_ptr<double[]>[]> &matrix, const int& size) {
+std::unique_ptr<std::unique_ptr<double[]>[]> populate_matrix(std::ifstream &inputFile, const int& size) {
     std::string line;
+    std::unique_ptr<std::unique_ptr<double[]>[]> result(new std::unique_ptr<double[]>[size]);
 
     for (int row = 0; row < size; row++) {
         std::getline(inputFile, line);
         std::istringstream iss(line);
         std::string token;
+        result[row] = std::make_unique<double[]>(size);
 
         for (int col = 0; col < size; col++) {
             std::getline(iss, token, DELIMITER);
-            matrix[row][col] = std::stold(token);
+            result[row][col] = std::stold(token);
         }
     }
+
+    return result;
 }
 
 
